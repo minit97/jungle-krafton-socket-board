@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useNavigate } from "react-router-dom";
+import { signup } from '../api/login'
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,13 +34,19 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const nav = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
+
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const email = data.get('email');
+        const password = data.get('password');
+        const name = data.get('firstName') + data.get('lastName');
+        if(signup(email, password, name)) {
+            nav('/login');
+        }
     };
 
     return (
@@ -102,12 +111,13 @@ export default function SignUp() {
                                     autoComplete="new-password"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
+                            {/* "저는 이메일을 통해 영감, 마케팅 프로모션 및 업데이트를 받고 싶습니다."*/}
+                            {/*<Grid item xs={12}>*/}
+                            {/*    <FormControlLabel*/}
+                            {/*        control={<Checkbox value="allowExtraEmails" color="primary" />}*/}
+                            {/*        label="I want to receive inspiration, marketing promotions and updates via email."*/}
+                            {/*    />*/}
+                            {/*</Grid>*/}
                         </Grid>
                         <Button
                             type="submit"
@@ -119,7 +129,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/login" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>

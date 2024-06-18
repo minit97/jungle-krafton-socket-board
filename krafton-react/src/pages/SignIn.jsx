@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+import { useNavigate } from "react-router-dom";
+import { signin } from '../api/login'
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,18 +30,22 @@ function Copyright(props) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const nav = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+
+        const email = data.get('email');
+        const password = data.get('password');
+
+        if(signin(email, password)) {
+            nav("/board");
+        }
     };
 
     return (
@@ -79,10 +87,10 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
+                        {/*<FormControlLabel*/}
+                        {/*    control={<Checkbox value="remember" color="primary" />}*/}
+                        {/*    label="Remember me"*/}
+                        {/*/>*/}
                         <Button
                             type="submit"
                             fullWidth
@@ -93,12 +101,12 @@ export default function SignIn() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+                                {/*<Link href="#" variant="body2">*/}
+                                {/*    Forgot password?*/}
+                                {/*</Link>*/}
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/join" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
