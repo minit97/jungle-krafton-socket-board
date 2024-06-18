@@ -3,7 +3,6 @@ package com.example.krafton_springboot.api.auth.service;
 import com.example.krafton_springboot.api.auth.dto.SignupDto;
 import com.example.krafton_springboot.api.auth.dto.UserDto;
 import com.example.krafton_springboot.api.auth.model.User;
-import com.example.krafton_springboot.api.auth.repository.AuthorityRepository;
 import com.example.krafton_springboot.api.auth.repository.UserRepository;
 import com.example.krafton_springboot.exception.securityException.DuplicateMemberException;
 import com.example.krafton_springboot.exception.securityException.NotFoundMemberException;
@@ -21,7 +20,6 @@ import static com.example.krafton_springboot.api.auth.model.Role.ROLE_USER;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
 

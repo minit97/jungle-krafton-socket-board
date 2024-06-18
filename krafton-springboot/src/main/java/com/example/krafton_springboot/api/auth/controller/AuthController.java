@@ -46,7 +46,7 @@ public class AuthController {
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
 
-    @PostMapping("/logout2")
+    @PostMapping("/logout1")
     public void logout() {
         log.warn("로그아웃성공!!!");
     }

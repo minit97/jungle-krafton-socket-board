@@ -1,9 +1,6 @@
 package com.example.krafton_springboot.config;
 
-import com.example.krafton_springboot.config.jwt.JwtAccessDeniedHandler;
-import com.example.krafton_springboot.config.jwt.JwtAuthenticationEntryPoint;
-import com.example.krafton_springboot.config.jwt.JwtSecurityConfig;
-import com.example.krafton_springboot.config.jwt.TokenProvider;
+import com.example.krafton_springboot.config.jwt.*;
 import com.example.krafton_springboot.config.security.LogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -50,24 +47,20 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
-
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().permitAll()
                 )
-
                 // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 // enable h2-console
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
-
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
