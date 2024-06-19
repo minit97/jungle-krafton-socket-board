@@ -65,3 +65,20 @@ export const board_delete = (email, password) => {
         throw new Error(error);
     });
 }
+
+export const file_upload = async (file) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file); // 'file'은 서버에서 기대하는z 파일 필드 이름
+
+        const response = await axios.post(`${API_BASE_URL}/api/s3/resource`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+}

@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useNavigate } from "react-router-dom";
-import { signup } from '../api/login'
+import { signup } from '../../api/auth'
 
 function Copyright(props) {
     return (
