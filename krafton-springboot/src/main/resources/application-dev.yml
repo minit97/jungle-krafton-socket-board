@@ -1,0 +1,42 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://{엔드포인트}:{포트번호}/{(초기)데이터베이스}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: jungledb
+
+    jpa:
+      hibernate:
+        ddl-auto: create
+      properties:
+        hibernate:
+          format_sql: true
+          show_sql: true
+          dialect: org.hibernate.dialect.MySQLDialect
+      generate-ddl: false
+      open-in-view: false
+
+jwt:
+  header: Authorization
+  secret: test
+  token-validity-in-seconds: 86400
+
+# log
+#logging:
+#  level:
+#    me.silvernine: DEBUG
+
+cloud:
+  aws:
+    credentials:
+      access-key: test  # IAM 계정의 accessKey
+      secret-key: test  # IAM 계정의 secretKey
+    region:
+      static: us-east-1  # 버킷의 리전
+    s3:
+      bucket: test  #  버킷 이름
+    stack:
+      auto: false
